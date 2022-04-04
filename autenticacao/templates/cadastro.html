@@ -7,8 +7,8 @@
 
 {% block 'body' %}
     <div class="box">
-        <form>
-
+        <form action="{% url 'autenticacao:cadastro'%}" method="post">
+            {% csrf_token %}
             <h1 class="titulo font-degrade borda-bottom-degrade">INSCREVA-SE</h2>
             <br>
             <span class="span-descricao">Nome de usuário:</span>

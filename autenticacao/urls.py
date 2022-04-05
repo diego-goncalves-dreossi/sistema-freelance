@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'autenticacao'
 urlpatterns = [
-   path('', views.login, name="login"),
-   path('cadastro/', views.cadastro, name="cadastro")
+   path('login/', views.login, name="login"),
+   path('cadastro/', views.cadastro, name="cadastro"),
+   path('sair/', views.sair, name="sair")
 ]

@@ -1,12 +1,10 @@
 .fundo{
-
-    background-color: #222;
+    background-color: #f35c04bb;
     color: white;
 
 }
 
 .box{
-
     background-color: #444;
     width: 500px;
     padding: 40px;
@@ -14,7 +12,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    box-shadow: 0 0px 20px 0 rgba( 255, 207, 0, 0.3 );
+    box-shadow: 0 0px 20px 0 #381D2A;
     
 
 }
@@ -30,7 +28,7 @@
 }
 
 .font-degrade{
-    background-image: linear-gradient(90deg, rgba(255,207,0,1) 0%, rgba(231,71,220,1) 100%);
+    background-image: linear-gradient(90deg, rgba(255,207,0,1) 0%, #F18701 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;

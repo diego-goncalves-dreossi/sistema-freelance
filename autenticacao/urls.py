@@ -12,3 +12,7 @@ urlpatterns = [
    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_confirm_view.html"), name="password_reset_confirm"),
    path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"), name="password_reset_complete"),
 ]
+
+"""
+'reset/<uidb64>/<token>/': identificador do usuário e token do formulário do usuário
+"""

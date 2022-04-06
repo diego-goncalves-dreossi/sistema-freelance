@@ -7,7 +7,7 @@
 
 {% block 'body' %}
 <div class="box">
-    <form action="{% url 'autenticacao:login' %}" method="post">
+    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
             {% if messages %}
             {% for message in messages %}
@@ -25,7 +25,7 @@
             <input type="password" class="form-control input-cadastro" name="password">
             <br>
             <input type="submit" value="LOGAR" class="btn btn-success btn-lg">
-            <a href="{% url 'autenticacao:login' %}" class="btn btn-primary btn-lg">CADASTRO</a>
+            <a href="{% url 'cadastro' %}" class="btn btn-primary btn-lg">CADASTRO</a>
     </form>
 
 </div>

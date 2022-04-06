@@ -7,7 +7,7 @@
 
 {% block 'body' %}
 <div class="box">
-    <form action="{% url 'autenticacao:cadastro'%}" method="post">
+    <form action="{% url 'cadastro'%}" method="post">
         {% csrf_token %}
         {% if messages %}
             {% for message in messages %}
@@ -21,6 +21,9 @@
             <span class="span-descricao">Nome de usuário:</span>
             <input type="text" class="form-control input-cadastro" name="username">
             <br>
+            <span class="span-descricao">E-mail:</span>
+            <input type="text" class="form-control input-cadastro" name="email">
+            <br>
             <span class="span-descricao">Senha:</span>
             <input type="password" class="form-control input-cadastro" name="password">
             <br>
@@ -28,7 +31,7 @@
             <input type="password" class="form-control input-cadastro" name="confirm-password">
             <br>
             <input type="submit" value="CADASTRAR" class="btn btn-success btn-lg">
-            <a href="{% url 'autenticacao:login'%}" class="btn btn-primary btn-lg">LOGIN</a>
+            <a href="{% url 'login'%}" class="btn btn-primary btn-lg">LOGIN</a>
     </form>
 
 </div>

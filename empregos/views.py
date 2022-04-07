@@ -11,7 +11,7 @@ def encontrar_emps(request):
         prazo_minimo = request.GET.get('prazo_minimo')
         prazo_maximo = request.GET.get('prazo_minimo')
         categoria = request.GET.get('categoria')
-
+        print(str(categoria)+'KLK')
         # Se um dos filtros foi usado
         if preco_minimo or preco_maximo or prazo_minimo or prazo_maximo or categoria:
             if not preco_minimo:
@@ -25,6 +25,14 @@ def encontrar_emps(request):
 
             if not prazo_maximo:
                 prazo_maximo = datetime(year=3000, month=1, day=1)
+
+            if categoria == 'D':
+                categoria = ['D',]
+            elif categoria == 'EV':
+                categoria = ['EV',]
+            else:
+                categoria = ['EV','D']
+            # O categoria_in no filtro abaixo verifica se categoria está numa lista 
 
             emps = Emprego.objects.filter(preco__gte=preco_minimo)\
                 .filter(preco__lte=preco_maximo)\

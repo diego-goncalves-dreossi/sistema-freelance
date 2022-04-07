@@ -1,12 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Emprego
+from datetime import datetime
 
 def encontrar_emps(request):
     if request.method == 'GET':
-        emps = Emprego.objects.filter(reservado = False)
         #print(emps)
-        
         preco_minimo = request.GET.get('preco_minimo')
         preco_maximo = request.GET.get('preco_maximo')
         prazo_minimo = request.GET.get('prazo_minimo')
@@ -15,7 +14,26 @@ def encontrar_emps(request):
 
         # Se um dos filtros foi usado
         if preco_minimo or preco_maximo or prazo_minimo or prazo_maximo or categoria:
-            pass
+            if not preco_minimo:
+                preco_minimo = 0
+
+            if not preco_maximo:
+                preco_maximo = 999999
+
+            if not prazo_minimo:
+                prazo_minimo = datetime(year=1900, month=1, day=1)
+
+            if not prazo_maximo:
+                prazo_maximo = datetime(year=3000, month=1, day=1)
+
+            emps = Emprego.objects.filter(preco__gte=preco_minimo)\
+                .filter(preco__lte=preco_maximo)\
+                .filter(prazo_entrega__gte=prazo_minimo)\
+                .filter(prazo_entrega__lte=prazo_maximo)\
+                .filter(categoria__in=categoria)\
+                .filter(reservado=False)
+        else:
+            emps = Emprego.objects.filter(reservado = False)
 
 
         return render(request, 'encontrar_emps.html',{'emps':emps})

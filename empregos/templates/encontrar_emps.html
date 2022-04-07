@@ -16,7 +16,8 @@
         <div class="row">
             
             <div class="col-sm">
-            <form action="{% url 'encontrar_emps' %}" method="POST">
+            <form action="{% url 'encontrar_emps' %}" method="GET">
+                {% csrf_token %}
                 <input type="text" class="form-control" placeholder="Preço mínimo" name="preco_minimo">
                 <br>
                 <input type="text" class="form-control" placeholder="Preço máximo" name="preco_maximo">

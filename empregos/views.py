@@ -11,7 +11,7 @@ def encontrar_emps(request):
         prazo_minimo = request.GET.get('prazo_minimo')
         prazo_maximo = request.GET.get('prazo_minimo')
         categoria = request.GET.get('categoria')
-        print(str(categoria)+'KLK')
+    
         # Se um dos filtros foi usado
         if preco_minimo or preco_maximo or prazo_minimo or prazo_maximo or categoria:
             if not preco_minimo:

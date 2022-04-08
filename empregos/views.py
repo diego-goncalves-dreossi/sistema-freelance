@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from .models import Emprego
 from datetime import datetime
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.messages import constants
 
 def encontrar_emps(request):
     if request.method == 'GET':
@@ -53,3 +56,26 @@ def aceitar_emp(request, id):
     emp.save()
     return redirect('/')
 
+def perfil(request):
+    if request.method == "GET":
+        return render(request, 'perfil.html')
+    elif request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        primeiro_nome = request.POST.get('primeiro_nome')
+        ultimo_nome = request.POST.get('ultimo_nome')
+
+        usuario = User.objects.filter(username=username).exclude(id=request.user.id)
+
+        if usuario.exists():
+            messages.add_message(request, constants.ERROR, 'Já existe um usuário com esse nome de usuário')
+            return redirect('/perfil')
+        
+        request.user.username = username
+        request.user.email = email
+        request.user.first_name = primeiro_nome
+        request.user.last_name = ultimo_nome
+        request.user.save()
+        messages.add_message(request, constants.SUCCESS, 'Dados alterado com sucesso')
+
+        return redirect('/perfil')

@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Emprego
 from datetime import datetime
 
@@ -45,4 +45,11 @@ def encontrar_emps(request):
 
 
         return render(request, 'encontrar_emps.html',{'emps':emps})
-        return HttpResponse(preco_minimo)
+
+def aceitar_emp(request, id):
+    emp = Emprego.objects.get(id=id)
+    emp.profissional = request.user
+    emp.reservado = True
+    emp.save()
+    return redirect('/')
+

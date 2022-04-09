@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 
 def encontrar_emps(request):
+    print(request.user.id)
     if request.method == 'GET':
         #print(emps)
         preco_minimo = request.GET.get('preco_minimo')
@@ -37,6 +38,7 @@ def encontrar_emps(request):
                 categoria = ['EV','D']
             # O categoria_in no filtro abaixo verifica se categoria está numa lista 
 
+            # .exclude(criador=)
             emps = Emprego.objects.filter(preco__gte=preco_minimo)\
                 .filter(preco__lte=preco_maximo)\
                 .filter(prazo_entrega__gte=prazo_minimo)\
@@ -80,3 +82,14 @@ def perfil(request):
         messages.add_message(request, constants.SUCCESS, 'Dados alterado com sucesso')
 
         return redirect('/perfil')
+
+def enviar_projeto(request):
+    arquivo = request.FILES.get('file')
+    id_emp = request.POST.get('id')
+
+    emp = Emprego.objects.get(id=id_emp)
+
+    emp.arquivo_final = arquivo
+    emp.status = 'AA'
+    emp.save()
+    return redirect('/perfil')

@@ -15,6 +15,7 @@ class Emprego(models.Model):
                       ('AA', 'Aguardando aprovação'),
                       ('F', 'Finalizado'))
 
+    #criador = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=1,related_name='criador')
     titulo = models.CharField(max_length=200)
     descricao = models.TextField()
     categoria = models.CharField(max_length=2, choices=categoria_choices, default="D")
@@ -23,7 +24,8 @@ class Emprego(models.Model):
     referencias = models.ManyToManyField(Referencia)
     profissional = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
     reservado = models.BooleanField(default=False)
-    status = models.CharField(max_length=2, choices=status_choices ,default='AA')
+    status = models.CharField(max_length=2, choices=status_choices ,default='C')
+    arquivo_final = models.FileField(null=True,upload_to='arquivos')
 
 
 

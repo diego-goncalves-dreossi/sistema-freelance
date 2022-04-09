@@ -68,13 +68,61 @@
                     {% if e.status == 'AA'%}
                     <span class="badge badge-info">Aguardando aprovação</span>
                     {% elif e.status == 'C' %}
-                    <span class="badge badge-primary">Em criação</span>
+                    <span class="badge badge-primary" data-toggle="modal" data-target="#modal-job-{{e.id}}">Em criação</span>
 
                     {% else %}
                     <span class="badge badge-success">Finalizado</span>
                     {% endif %}
                 </td>
             </tr>
+
+            {% for e in emps %}
+                {% if e.status == "C"%}
+                    <div class="modal fade" id="modal-job-{{e.id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div style="background-color: #333;" class="modal-content">
+                                <div class="modal-header">
+                                    <h5 style="font-size: 30px" class="modal-title titulo" id="exampleModalLabel">JOB:</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <h4 class="titulo-job">{{e.titulo}}</h4>
+                                    <br>
+                                    <h6 class="titulo-body">Status:</h6>
+
+                                    {% if e.status == 'AA'%}
+                                    <span class="badge badge-info">Aguardando aprovação</span>
+                                    {% elif e.status == 'C' %}
+                                    <a class="badge badge-primary">Em criação</a>
+
+                                    {% else %}
+                                    <span class="badge badge-success">Finalizado</span>
+                                    {% endif %}
+
+                                    <h6 class="titulo-body">Prazo máximo para entrega:</h6>
+                                    <p>{{e.prazo_entrega}}</p>
+
+                                    <hr style="border-color: yellow">
+                                    <form action="{% url 'enviar_projeto' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="file" class="form-control" placeholder="Enviar arquivos" name="file">
+                                        <input type="hidden" name="id" value="{{e.id}}">
+                                        <br>
+                                        <input type="submit" value="Enviar" class="btn btn-success btn-lg">
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
 
         </tbody>

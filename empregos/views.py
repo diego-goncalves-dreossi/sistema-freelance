@@ -58,7 +58,8 @@ def aceitar_emp(request, id):
 
 def perfil(request):
     if request.method == "GET":
-        return render(request, 'perfil.html')
+        emps = Emprego.objects.filter(profissional=request.user)
+        return render(request, 'perfil.html',{'emps':emps})
     elif request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')

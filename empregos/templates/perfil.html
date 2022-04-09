@@ -3,66 +3,83 @@
 
 
 {% block 'head' %}
-		<link rel="stylesheet" href="{% static 'empregos/css/encontrar_emps.css' %}">
-    <link rel="stylesheet" href="{% static 'empregbs/css/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'empregos/css/encontrar_emps.css' %}">
+<link rel="stylesheet" href="{% static 'empregbs/css/perfil.css' %}">
 {% endblock %}
 
 
 {% block 'body' %}
+<br>
+<br>
+<div class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {{message.tags}}">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div style="width: 60%">
+        <form action="{% url 'perfil' %}" method="POST">{% csrf_token %}
+            <p>Nome de usuário:</p>
+            <input type="text" class="form-control" value="{{user.username}}" name="username">
+            <br>
+            <p>Email:</p>
+            <input type="email" class="form-control" value="{{user.email}}" name="email">
+            <br>
+            <p>Primeiro nome:</p>
+            <input type="text" class="form-control" value="{{user.first_name}}" name="primeiro_nome">
+            <br>
+            <p>Último nome:</p>
+            <input type="text" class="form-control" value="{{user.last_name}}" name="ultimo_nome">
+            <br>
+            <input type="submit" class="btn btn-success btn-lg" value="Salvar alterações">
+        </form>
+    </div>
     <br>
+    <hr class="borda-degrade">
     <br>
-    <div class="container">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert {{message.tags}}">
-                    {{message}}
-                </div>
-            {% endfor %}
-        {% endif %}
-        <div style="width: 60%">
-            <form action="{% url 'perfil' %}" method="POST">{% csrf_token %}
-                <p>Nome de usuário:</p>
-                <input type="text" class="form-control" value="{{user.username}}" name="username">
-                <br>
-                <p>Email:</p>
-                <input type="email" class="form-control" value="{{user.email}}" name="email">
-                <br>
-                <p>Primeiro nome:</p>
-                <input type="text" class="form-control" value="{{user.first_name}}" name="primeiro_nome">
-                <br>
-                <p>Último nome:</p>
-                <input type="text" class="form-control" value="{{user.last_name}}" name="ultimo_nome">
-                <br>
-                <input type="submit" class="btn btn-success btn-lg" value="Salvar alterações">
-            </form>
-        </div>
-        <br>    
-        <hr class="borda-degrade">
-        <br>
-        <h4 class="titulo">Histórico</h4>
+    <h4 class="titulo">Histórico</h4>
 
-        <table style="background-color: #222; color: white;" class="table table-striped">
-            <thead>
-                <tr>
+    <table style="background-color: #222; color: white;" class="table table-striped">
+        <thead>
+            <tr>
                 <th scope="col">Imagem</th>
                 <th scope="col">Título</th>
                 <th scope="col">Categoria</th>
                 <th scope="col">Descrição</th>
                 <th scope="col">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row"><img width="100px" src="/media/referencias/AULA_01_1.png"></th>
-                    <td>a</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>x</td>
-                </tr>
-               
-            </tbody>
-        </table>
+            </tr>
+        </thead>
+        <tbody>
 
-    </div>
+            {% for e in emps %}
+            <tr>
+                <th scope="row"><img width="100px" src="{{e.referencias.all.0}}"></th>
+                <td>{{e.titulo}}</td>
+                <td>{{e.categoria}}</td>
+                <td>{% if e.categoria == 'D'%}
+                    Design
+                    {% else %}
+                    Edição de vídeo
+                    {% endif%}
+                </td>
+                <td>
+                    {% if e.status == 'AA'%}
+                    <span class="badge badge-info">Aguardando aprovação</span>
+                    {% elif e.status == 'C' %}
+                    <span class="badge badge-primary">Em criação</span>
+
+                    {% else %}
+                    <span class="badge badge-success">Finalizado</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+</div>
 
 {% endblock %}

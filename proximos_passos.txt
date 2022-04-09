@@ -1,0 +1,1 @@
+- Adicionar funcionalidade de adicionar vagas de emprego, junto com todos os ajustes necessários pelo projeto.

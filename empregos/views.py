@@ -5,7 +5,10 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.contrib.auth.decorators import login_required
 
+# Faz com que views só sejam acessadas caso usuários estejam logados
+@login_required(login_url='/auth/login')
 def encontrar_emps(request):
     print(request.user.id)
     if request.method == 'GET':
@@ -51,6 +54,7 @@ def encontrar_emps(request):
 
         return render(request, 'encontrar_emps.html',{'emps':emps})
 
+@login_required(login_url='/auth/login')
 def aceitar_emp(request, id):
     emp = Emprego.objects.get(id=id)
     emp.profissional = request.user
@@ -58,6 +62,7 @@ def aceitar_emp(request, id):
     emp.save()
     return redirect('/')
 
+@login_required(login_url='/auth/login')
 def perfil(request):
     if request.method == "GET":
         emps = Emprego.objects.filter(profissional=request.user)
@@ -83,6 +88,7 @@ def perfil(request):
 
         return redirect('/perfil')
 
+@login_required(login_url='/auth/login')
 def enviar_projeto(request):
     arquivo = request.FILES.get('file')
     id_emp = request.POST.get('id')

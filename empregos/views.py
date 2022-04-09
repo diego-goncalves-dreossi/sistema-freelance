@@ -99,3 +99,13 @@ def enviar_projeto(request):
     emp.status = 'AA'
     emp.save()
     return redirect('/perfil')
+
+@login_required(login_url='/auth/login')
+def suas_vagas(request):
+    emps = 'a fazer'
+    return render(request, 'suas_vagas.html',{'emps':emps})
+
+@login_required(login_url='/auth/login')
+def criar_vagas(request):
+    emps = 'a fazer criar'
+    return render(request, 'criar_vagas.html',{'emps':emps})
